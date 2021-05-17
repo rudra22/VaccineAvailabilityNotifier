@@ -16,6 +16,8 @@ class ArgParser(object):
             description="Vaccine availability argument parser")
         parser.add_argument("--search_by", required=True,
                             help="Options: pin, district")
+        parser.add_argument("--search_days", required=False, default=1, type=int,
+                            help="Number of days to search from today")
         parser.add_argument("--age", required=False, default=100,
                             help="Age of the person to be vaccinated")
         parser.add_argument("--pin", required=False,
@@ -36,9 +38,9 @@ class Searcher(object):
         self.age = age
         self.pin_code = None
         self.district_name = None
-        self.state_code = 1
+        self.state_code = 36
 
-    def search_by_pin(self, pin_code, duration_in_days=3):
+    def search_by_pin(self, pin_code, duration_in_days=1):
         self.pin_code = pin_code
         api_endpoint = "/v2/appointment/sessions/public/calendarByPin"
         url = f"{Searcher.base_url + api_endpoint}?pincode={self.pin_code}"
@@ -57,7 +59,7 @@ class Searcher(object):
                 availability.extend(formatted_response)
         Searcher.printer(availability)
 
-    def search_by_district(self, district_name, duration_in_days=3):
+    def search_by_district(self, district_name, duration_in_days=1):
         self.district_name = district_name
         api_endpoint = "/v2/appointment/sessions/public/calendarByDistrict"
         district_id = self.fetch_district_code()
@@ -150,8 +152,8 @@ def main():
         if search_args.get("pin"):
             while True:
                 search_obj = Searcher(int(search_args["age"]))
-                search_obj.search_by_pin(search_args["pin"])
-                time.sleep(int(search_args["search_frequency"]) * 1)
+                search_obj.search_by_pin(search_args["pin"], search_args["search_days"])
+                time.sleep(int(search_args["search_frequency"]) * 60)
         else:
             print("No pin available")
             exit(0)
@@ -159,8 +161,8 @@ def main():
         if search_args.get("district"):
             while True:
                 search_obj = Searcher(int(search_args["age"]))
-                search_obj.search_by_district(search_args["district"])
-                time.sleep(int(search_args["search_frequency"]) * 1)
+                search_obj.search_by_district(search_args["district"], search_args["search_days"])
+                time.sleep(int(search_args["search_frequency"]) * 60)
         else:
             print("No district available")
             exit(0)
