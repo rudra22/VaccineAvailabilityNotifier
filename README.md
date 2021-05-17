@@ -22,10 +22,10 @@ Please check the URL https://apisetu.gov.in/public/marketplace/api/cowin/cowin-p
 Example Script Execution
 ```python
 # Search by PIN
-python --search_by pin --search_days 3 --district "711110"
+python vaccine_availability_notifier.py --search_by pin --search_days 3 --district "711110"
 
 # Search by District
-python --search_by district --search_days 3 --district "Kolkata"
+python vaccine_availability_notifier.py --search_by district --search_days 3 --district "Kolkata"
 ```
 
 ### Future Update
