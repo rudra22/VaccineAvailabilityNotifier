@@ -17,7 +17,7 @@ Please check the URL https://apisetu.gov.in/public/marketplace/api/cowin/cowin-p
 - Please provide the number of days you want to search for the availability check using --search_days argument. Default value is 1
 - The state code is hard coded with the code of West Bengal. This can be also be parameterized if required. Let me know in comments if you need that.
 - The script will end f=gracefully if there is an availability. Otherwise it will keep running and search at every 30 minutes interval.
-- The default search interval of 30 minutes can be altered by passing an argument with --search_frequency. But please be mindful of hitting the API Setu too many times. Your IP may get blocked. Please read the link shared above on the limitation.
+- The default search interval of 30 minutes can be altered by passing an argument with --search_frequency. But please be mindful of hitting API Setu endpoints too many times. Your IP may get blocked. Please read the link shared above on the limitation.
 
 Example Script Execution
 ```python
